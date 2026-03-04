@@ -24,7 +24,7 @@ def list_detections(
         return detection_service.list_by_cctv(
             session, cctv_id, offset=offset, limit=limit
         )
-    return []
+    return detection_service.list_all(session, offset=offset, limit=limit)
 
 
 @router.post("/", response_model=DetectionRead, status_code=201)

@@ -29,6 +29,11 @@ class DetectionService:
             session, cctv_id=cctv_id, offset=offset, limit=limit
         )
 
+    def list_all(
+        self, session: Session, offset: int = 0, limit: int = 20
+    ) -> list[Detection]:
+        return detection_crud.get_multi(session, offset=offset, limit=limit)
+
     def list_unconfirmed(
         self, session: Session, offset: int = 0, limit: int = 20
     ) -> list[Detection]:

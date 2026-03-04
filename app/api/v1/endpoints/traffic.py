@@ -11,14 +11,16 @@ router = APIRouter()
 
 @router.get("/", response_model=list[TrafficInfoRead])
 def list_traffic(
-    cctv_id: int = Query(...),
+    cctv_id: int | None = Query(None),
     offset: int = Query(0, ge=0),
     limit: int = Query(20, ge=1, le=100),
     session: Session = Depends(get_session),
 ):
-    return traffic_service.list_by_cctv(
-        session, cctv_id, offset=offset, limit=limit
-    )
+    if cctv_id is not None:
+        return traffic_service.list_by_cctv(
+            session, cctv_id, offset=offset, limit=limit
+        )
+    return traffic_service.list_all(session, offset=offset, limit=limit)
 
 
 @router.post("/", response_model=TrafficInfoRead, status_code=201)

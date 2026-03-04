@@ -16,6 +16,11 @@ class TrafficService:
     ) -> TrafficInfo | None:
         return traffic_crud.get_latest_by_cctv(session, cctv_id=cctv_id)
 
+    def list_all(
+        self, session: Session, offset: int = 0, limit: int = 20
+    ) -> list[TrafficInfo]:
+        return traffic_crud.get_multi(session, offset=offset, limit=limit)
+
     def list_by_cctv(
         self,
         session: Session,
